@@ -11,9 +11,13 @@ Proximal Policy Optimization Algorithm
 </div>
 
 状态空间：方块的水平和竖直坐标(𝑥, 𝑦)，有无数种可能状态。
+
 动作空间：向左移动一个单位，或向右移动一个单位。
+
 策略网络：采用三层MLP网络，输入归一化后的水平和竖直坐标，网络输出决策概率，是一个二维的向量。
+
 奖励机制：分为过程奖励和结果奖励。过程奖励：奖励初始化为0，如果此时水平位置在(4.0, 6.0)内，则奖励加0.2，否则减0.1；将水平位置和5.0（目标区域的中心）的绝对值视为距离，奖励值减去0.05倍的距离；最后引入时间惩罚，奖励值减去0.1，促使智能体尽可能在较短的步骤内实现预期目标。结果奖励：如果水平位置在(4.0, 6.0)内，则奖励为10.0；否则为-10.0 。
+
 
 # 代码运行
 
@@ -23,14 +27,14 @@ python test.py   # 可视化智能体决策效果
 ```
 
 环境
-"""
+```
 TARGET_RANGE = (4.0, 6.0)
 INITIAL_HEIGHT = 10.0
 X_BOUNDS = (0.0, 10.0)
-"""
+```
 
 智能体
-"""
+```
 class DropBlockEnv:
     def __init__(self):
         self.x = None
@@ -70,10 +74,10 @@ class DropBlockEnv:
         reward -= 0.1
 
         return reward
-"""
+```
 
 决策网络
-"""
+```
 class Actor(nn.Module):
     def __init__(self, state_dim, action_dim, hidden_size=128):
         super(Actor, self).__init__()
@@ -88,11 +92,12 @@ class Actor(nn.Module):
 
     def forward(self, x):
         return self.net(x)
-"""
+```
 
 
 
 # 实验结果
+
 假设1个epoch采样1条轨迹，总共训练2500个epoch（即采样2500次），每累积10条轨迹后进行4次参数更新（即总共更新参数10000次），训练效率大幅提升。当网络参数随机初始化时，智能体决策的成功率为14.84%；而当训练结束后，智能体决策的成功率为96.86%。
 
 
