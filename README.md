@@ -22,7 +22,9 @@ Proximal Policy Optimization Algorithm
 # 代码运行
 
 这里PPO算法采用的是最简单的实现方式，优势函数采用累积折扣回报和基线计算，并未采用Actor-Critic框架。
+
 如果想要深入研究Actor-Critic框架下的PPO算法实现（蒙特卡洛方法、时序差分方法、广义优势估计方法），可前往主页项目：Proximal-Policy-Optimization2
+
 
 ```bash
 python train.py  # 训练决策网络
